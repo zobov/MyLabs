@@ -33,7 +33,7 @@ public class LinkedDeque<E> extends AbstractCollection<E> implements Deque<E>{
 
     @Override
     public E getFirst() throws NoSuchElementException {
-        if (!isEmpty())
+        if (isEmpty())
             throw new NoSuchElementException();
         else
             return head.next.element;
@@ -41,7 +41,7 @@ public class LinkedDeque<E> extends AbstractCollection<E> implements Deque<E>{
 
     @Override
     public E getLast() throws NoSuchElementException {
-        if (!isEmpty())
+        if (isEmpty())
             throw new NoSuchElementException();
         else
             return head.prev.element;
@@ -49,20 +49,14 @@ public class LinkedDeque<E> extends AbstractCollection<E> implements Deque<E>{
 
     @Override
     public E peekFirst() {
-        try {
-            return getFirst();
-        } catch (NoSuchElementException e) {
-            return null;
-        }
+        if (isEmpty()) return null;
+        return getFirst();
     }
 
     @Override
     public E peekLast() {
-        try {
-            return getFirst();
-        } catch (NoSuchElementException e) {
-            return null;
-        }
+        if (isEmpty()) return null;
+        return getLast();
     }
 
     @Override
@@ -93,7 +87,7 @@ public class LinkedDeque<E> extends AbstractCollection<E> implements Deque<E>{
     //TODO need to test
     public String toString() {
         StringBuilder result = new StringBuilder();
-        for (Node<E> current = head.next; current != null; current = current.next)
+        for (Node<E> current = head.next; current.next != null; current = current.next)
             result.append(current.element.toString() + " ");
         return result.toString();
     }
