@@ -87,7 +87,7 @@ public class LinkedDeque<E> extends AbstractCollection<E> implements Deque<E>{
     //TODO need to test
     public String toString() {
         StringBuilder result = new StringBuilder();
-        for (Node<E> current = head.next; current.next != null; current = current.next)
+        for (Node<E> current = head.next; current != head; current = current.next)
             result.append(current.element.toString() + " ");
         return result.toString();
     }
