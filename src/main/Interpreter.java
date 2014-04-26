@@ -18,17 +18,17 @@ public class Interpreter {
      */
     public Interpreter(String inputFileName, String outputFileName) throws IOException {
         try{
-        File inputFile = new File(inputFileName);
-        if (!inputFile.canRead()) {
-            throw new IOException("Can't read from '" + inputFileName + "', may be file doesn't exist.");
-        }
-        input = new BufferedReader(new FileReader(inputFile));
-        File outputFile = new File(outputFileName);
-        if (!inputFile.canRead()) {
-            throw new IOException("Can't write to '" + outputFileName + "'.");
-        }
-        output = new PrintWriter(new FileWriter(outputFileName));
-        myDeque = new LinkedDeque<>();
+            File inputFile = new File(inputFileName);
+            if (!inputFile.canRead()) {
+                throw new IOException("Can't read from '" + inputFileName + "', may be file doesn't exist.");
+            }
+            input = new BufferedReader(new FileReader(inputFile));
+            File outputFile = new File(outputFileName);
+            if (!outputFile.canWrite()) {
+                throw new IOException("Can't write to '" + outputFileName + "'.");
+            }
+            output = new PrintWriter(new FileWriter(outputFileName));
+            myDeque = new LinkedDeque<>();
         } catch (Exception e){
             closeIOStreams();
             throw e;
