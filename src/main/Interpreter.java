@@ -38,61 +38,66 @@ public class Interpreter {
      * if methods returns nothing then we just print information about command
      * example - string with command: 'addLast 5' printed value: 'add last 5'
      */
-    public void run() throws IOException, DataFormatException {
+     public void run() throws IOException, DataFormatException {
         try {
             while (input.ready()) {
-                String[] commandLine = input.readLine().split(" ");
-                switch (commandLine[0]) {
-                    case "addFirst":
-                        if (commandLine.length < 2) throw new DataFormatException("Invalid argument for 'addFirst'");
-                        myDeque.addFirst(commandLine[1]);
-                        output.println("add first: " + commandLine[1]);
-                        break;
-                    case "addLast":
-                        if (commandLine.length < 2) throw new DataFormatException("Invalid argument for 'addLast'");
-                        myDeque.addLast(commandLine[1]);
-                        output.println("add last: " + commandLine[1]);
-                        break;
-                    case "pollFirst":
-                        output.println("Poll first: " + myDeque.pollFirst());
-                        break;
-                    case "pollLast":
-                        output.println("Poll last " + myDeque.pollLast());
-                        break;
-                    case "peekFirst":
-                        output.println("Peek first: " + myDeque.peekFirst());
-                        break;
-                    case "peekLast":
-                        output.println("Peek last: " + myDeque.peekLast());
-                        break;
-                    case "getFirst":
-                        output.println("Get first: " + myDeque.getFirst());
-                        break;
-                    case "getLast":
-                        output.println("Get last: " + myDeque.getLast());
-                        break;
-                    case "isEmpty":
-                        output.println("Is empty - " + myDeque.isEmpty());
-                        break;
-                    case "size":
-                        output.println("Size: " + myDeque.size());
-                        break;
-                    case "toString":
-                        output.println("To string: " + myDeque.toString());
-                        break;
-                    case "clear":
-                        output.println("Clear");
-                        myDeque.clear();
-                        break;
-                    default:
-                        throw new DataFormatException("unknown command " + commandLine[0]);
-                }
+                String command = input.readLine();
+                runCommand(command);
             }
-
         } finally {
             closeIOStreams();
         }
     }
+
+    void runCommand(String command) throws DataFormatException {
+        String[] commandLine = command.split(" ");
+        switch (commandLine[0]) {
+            case "addFirst":
+                if (commandLine.length < 2) throw new DataFormatException("Invalid argument for 'addFirst'");
+                myDeque.addFirst(commandLine[1]);
+                output.println("add first: " + commandLine[1]);
+                break;
+            case "addLast":
+                if (commandLine.length < 2) throw new DataFormatException("Invalid argument for 'addLast'");
+                myDeque.addLast(commandLine[1]);
+                output.println("add last: " + commandLine[1]);
+                break;
+            case "pollFirst":
+                output.println("Poll first: " + myDeque.pollFirst());
+                break;
+            case "pollLast":
+                output.println("Poll last " + myDeque.pollLast());
+                break;
+            case "peekFirst":
+                output.println("Peek first: " + myDeque.peekFirst());
+                break;
+            case "peekLast":
+                output.println("Peek last: " + myDeque.peekLast());
+                break;
+            case "getFirst":
+                output.println("Get first: " + myDeque.getFirst());
+                break;
+            case "getLast":
+                output.println("Get last: " + myDeque.getLast());
+                break;
+            case "isEmpty":
+                output.println("Is empty - " + myDeque.isEmpty());
+                break;
+            case "size":
+                output.println("Size: " + myDeque.size());
+                break;
+            case "toString":
+                output.println("To string: " + myDeque.toString());
+                break;
+            case "clear":
+                output.println("Clear");
+                myDeque.clear();
+                break;
+            default:
+                throw new DataFormatException("Unknown command " + commandLine[0]);
+        }
+    }
+    
     void closeIOStreams() throws IOException {
         try{
             if (output != null) output.close();
