@@ -1,5 +1,3 @@
-package main;
-
 import java.io.*;
 import java.util.Deque;
 import java.util.zip.DataFormatException;
@@ -29,9 +27,8 @@ public class Interpreter {
             }
             output = new PrintWriter(new FileWriter(outputFileName));
             myDeque = new LinkedDeque<>();
-        } catch (Exception e){
+        } finally {
             closeIOStreams();
-            throw e;
         }
     }
 
@@ -41,16 +38,18 @@ public class Interpreter {
      * if methods returns nothing then we just print information about command
      * example - string with command: 'addLast 5' printed value: 'add last 5'
      */
-    public void run() throws IOException {
+    public void run() throws IOException, DataFormatException {
         try {
             while (input.ready()) {
                 String[] commandLine = input.readLine().split(" ");
                 switch (commandLine[0]) {
                     case "addFirst":
+                        if (commandLine.length < 2) throw new DataFormatException("Invalid argument for 'addFirst'");
                         myDeque.addFirst(commandLine[1]);
                         output.println("add first: " + commandLine[1]);
                         break;
                     case "addLast":
+                        if (commandLine.length < 2) throw new DataFormatException("Invalid argument for 'addLast'");
                         myDeque.addLast(commandLine[1]);
                         output.println("add last: " + commandLine[1]);
                         break;
@@ -89,14 +88,22 @@ public class Interpreter {
                         throw new DataFormatException("unknown command " + commandLine[0]);
                 }
             }
-        } catch (Exception e) {
-            System.err.print(e.getMessage());
+
         } finally {
             closeIOStreams();
         }
     }
     void closeIOStreams() throws IOException {
-        if (output != null) output.close();
-        if (input != null) input.close();
+        try{
+            if (output != null) output.close();
+        } catch(Exception e){
+            System.err.print("Can't close output file");
+        }
+
+        try{
+            if (input != null) input.close();
+        } catch(Exception e){
+            System.err.print("Can't close input file");
+        }
     }
 }
