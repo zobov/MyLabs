@@ -1,3 +1,5 @@
+package main;
+
 import java.io.*;
 import java.util.Deque;
 import java.util.zip.DataFormatException;
@@ -6,9 +8,9 @@ import java.util.zip.DataFormatException;
  * Created by Zobov on 17.04.14.
  */
 public class Interpreter {
-    BufferedReader input = null;
-    PrintWriter output = null;
-    Deque<String> myDeque;
+    private BufferedReader input = null;
+    private PrintWriter output = null;
+    private Deque<String> myDeque;
 
     /**
      * @param inputFileName  - path to the file which contains instructions
@@ -38,7 +40,7 @@ public class Interpreter {
      * if methods returns nothing then we just print information about command
      * example - string with command: 'addLast 5' printed value: 'add last 5'
      */
-     public void run() throws IOException, DataFormatException {
+    public void run() throws IOException, DataFormatException {
         try {
             while (input.ready()) {
                 String command = input.readLine();
@@ -49,7 +51,7 @@ public class Interpreter {
         }
     }
 
-    void runCommand(String command) throws DataFormatException {
+    private void runCommand(String command) throws DataFormatException {
         String[] commandLine = command.split(" ");
         switch (commandLine[0]) {
             case "addFirst":
@@ -97,8 +99,8 @@ public class Interpreter {
                 throw new DataFormatException("Unknown command " + commandLine[0]);
         }
     }
-    
-    void closeIOStreams() throws IOException {
+
+    private void closeIOStreams() throws IOException {
         try{
             if (output != null) output.close();
         } catch(Exception e){
