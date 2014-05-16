@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.IOException;
 import java.util.zip.DataFormatException;
 
@@ -12,11 +13,13 @@ public class InterpreterRunner {
             return;
         }
         try {
-            new Interpreter(args[0], args[1]).run();
+        	File inputFile = new File(args[0]);
+        	File outputFile = new File(args[1]);
+            new Interpreter().run(inputFile, outputFile);
         } catch (IOException | DataFormatException e) {
-            System.err.print(e.getMessage());
+            e.printStackTrace();
         } catch (Exception e) {
-            System.err.print(e);
+            e.printStackTrace();
         }
     }
 }
