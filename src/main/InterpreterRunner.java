@@ -13,8 +13,9 @@ public class InterpreterRunner {
             return;
         }
         try {
-        	File inputFile = new File(args[0]);
-        	File outputFile = new File(args[1]);
+            File inputFile = new File(args[0]);
+            File outputFile = new File(args[1]);
+            
             new Interpreter().run(inputFile, outputFile);
         } catch (IOException | DataFormatException e) {
             e.printStackTrace();
