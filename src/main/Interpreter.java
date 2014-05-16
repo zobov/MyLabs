@@ -26,13 +26,7 @@ public class Interpreter {
      * @param outputFileName - the file in which results will be written
      */
     public void run(File inputFile, File outputFile) throws IOException, DataFormatException {
-        try {/*
-        	if (!inputFile.canRead()) {
-                throw new IOException("Can't read from '" + inputFile.toString() + "', may be file doesn't exist.");
-            }
-            if (!outputFile.canWrite()) {
-                throw new IOException("Can't write to '" + outputFile.toString() + "'.");
-            }*/
+        try {
             input = new BufferedReader(new FileReader(inputFile));
             output = new PrintWriter(new FileWriter(outputFile));
             while (input.ready()) {
