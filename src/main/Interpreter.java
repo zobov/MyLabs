@@ -12,26 +12,9 @@ public class Interpreter {
     private PrintWriter output = null;
     private Deque<String> myDeque;
 
-    /**
-     * @param inputFileName  - path to the file which contains instructions
-     * @param outputFileName - path to the file in which results will be written
-     */
-    public Interpreter(String inputFileName, String outputFileName) throws IOException {
-        try{
-            File inputFile = new File(inputFileName);
-            if (!inputFile.canRead()) {
-                throw new IOException("Can't read from '" + inputFileName + "', may be file doesn't exist.");
-            }
-            input = new BufferedReader(new FileReader(inputFile));
-            File outputFile = new File(outputFileName);
-            if (!outputFile.canWrite()) {
-                throw new IOException("Can't write to '" + outputFileName + "'.");
-            }
-            output = new PrintWriter(new FileWriter(outputFileName));
-            myDeque = new LinkedDeque<>();
-        } finally {
-            closeIOStreams();
-        }
+
+    public Interpreter()  {         
+    	myDeque = new LinkedDeque<>();       
     }
 
     /**
@@ -39,9 +22,19 @@ public class Interpreter {
      * Results of each operation is written into the outputFile.
      * if methods returns nothing then we just print information about command
      * example - string with command: 'addLast 5' printed value: 'add last 5'
+     * @param inputFile  - the file which contains instructions
+     * @param outputFileName - the file in which results will be written
      */
-    public void run() throws IOException, DataFormatException {
-        try {
+    public void run(File inputFile, File outputFile) throws IOException, DataFormatException {
+        try {/*
+        	if (!inputFile.canRead()) {
+                throw new IOException("Can't read from '" + inputFile.toString() + "', may be file doesn't exist.");
+            }
+            if (!outputFile.canWrite()) {
+                throw new IOException("Can't write to '" + outputFile.toString() + "'.");
+            }*/
+            input = new BufferedReader(new FileReader(inputFile));
+            output = new PrintWriter(new FileWriter(outputFile));
             while (input.ready()) {
                 String command = input.readLine();
                 runCommand(command);
@@ -57,18 +50,18 @@ public class Interpreter {
             case "addFirst":
                 if (commandLine.length < 2) throw new DataFormatException("Invalid argument for 'addFirst'");
                 myDeque.addFirst(commandLine[1]);
-                output.println("add first: " + commandLine[1]);
+                output.println("Add first: " + commandLine[1]);
                 break;
             case "addLast":
                 if (commandLine.length < 2) throw new DataFormatException("Invalid argument for 'addLast'");
                 myDeque.addLast(commandLine[1]);
-                output.println("add last: " + commandLine[1]);
+                output.println("Add last: " + commandLine[1]);
                 break;
             case "pollFirst":
                 output.println("Poll first: " + myDeque.pollFirst());
                 break;
             case "pollLast":
-                output.println("Poll last " + myDeque.pollLast());
+                output.println("Poll last: " + myDeque.pollLast());
                 break;
             case "peekFirst":
                 output.println("Peek first: " + myDeque.peekFirst());
@@ -100,7 +93,7 @@ public class Interpreter {
         }
     }
 
-    private void closeIOStreams() throws IOException {
+    private void closeIOStreams() {
         try{
             if (output != null) output.close();
         } catch(Exception e){
