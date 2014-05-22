@@ -2,7 +2,7 @@ package main;
 
 import java.io.*;
 import java.util.Deque;
-import java.util.zip.DataFormatException;
+
 
 /**
  * Created by Zobov on 17.04.14.
@@ -25,7 +25,7 @@ public class Interpreter {
      * @param inputFile  - the file which contains instructions
      * @param outputFileName - the file in which results will be written
      */
-    public void run(File inputFile, File outputFile) throws IOException, DataFormatException {
+    public void run(File inputFile, File outputFile) throws IOException, InvalidCommandException {
         try {
             input = new BufferedReader(new FileReader(inputFile));
             output = new PrintWriter(new FileWriter(outputFile));
@@ -38,16 +38,16 @@ public class Interpreter {
         }
     }
 
-    private void runCommand(String command) throws DataFormatException {
+    private void runCommand(String command) throws InvalidCommandException {
         String[] commandLine = command.split(" ");
         switch (commandLine[0]) {
             case "addFirst":
-                if (commandLine.length < 2) throw new DataFormatException("Invalid argument for 'addFirst'");
+                if (commandLine.length < 2) throw new InvalidCommandException("Invalid argument for 'addFirst'");
                 myDeque.addFirst(commandLine[1]);
                 output.println("Add first: " + commandLine[1]);
                 break;
             case "addLast":
-                if (commandLine.length < 2) throw new DataFormatException("Invalid argument for 'addLast'");
+                if (commandLine.length < 2) throw new InvalidCommandException("Invalid argument for 'addLast'");
                 myDeque.addLast(commandLine[1]);
                 output.println("Add last: " + commandLine[1]);
                 break;
@@ -83,7 +83,7 @@ public class Interpreter {
                 myDeque.clear();
                 break;
             default:
-                throw new DataFormatException("Unknown command " + commandLine[0]);
+                throw new InvalidCommandException("Unknown command " + commandLine[0]);
         }
     }
 
