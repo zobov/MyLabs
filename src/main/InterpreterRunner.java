@@ -1,6 +1,7 @@
+package main;
+
 import java.io.File;
 import java.io.IOException;
-import java.util.zip.DataFormatException;
 
 /**
  * Created by Zobov on 17.04.14.
@@ -17,7 +18,7 @@ public class InterpreterRunner {
             File outputFile = new File(args[1]);
             
             new Interpreter().run(inputFile, outputFile);
-        } catch (IOException | DataFormatException e) {
+        } catch (IOException | InvalidCommandException e) {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
