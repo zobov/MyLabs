@@ -1,22 +1,21 @@
 import java.util.List;
+import java.util.StringTokenizer;
 
 public class Maximum implements Runnable{
 	private List<Integer> finalList;
-	private int[] array;
+	StringTokenizer st;
 
-	public Maximum(int[] array, List<Integer> finalList) {
-		this.array = array;
+	public Maximum(String data, List<Integer> finalList) {
+		st = new StringTokenizer(data);
 		this.finalList = finalList;
 	}
 
 	@Override
 	public void run() {
-		int max = array[0];
-		for (int i = 0; i < array.length; i++) {
-			max = Math.max(array[i], max);
+		int result = Integer.parseInt(st.nextToken());
+		while (st.hasMoreTokens()) {
+			result = Math.max(result, Integer.parseInt(st.nextToken()));
 		}
-
-		finalList.add(max);
-
+		finalList.add(result);
 	}
 }
